@@ -96,7 +96,7 @@ class ViewController: UIViewController, WKNavigationDelegate {
         //host: website domain like apple.com
         
         //set url equal to the URL of the navigation
-        let url = navigationAction.request.url //
+        let url = navigationAction.request.url
         
         if let host = url?.host {//if there is a host for this URL, pull it out
             for website in websites {
@@ -104,10 +104,17 @@ class ViewController: UIViewController, WKNavigationDelegate {
                     decisionHandler(.allow)// allow loading
                     return
                 }
+                
             }
             
+            let ac = UIAlertController(title: "Banned", message: "The link you're trying to visit is not safe", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(ac,animated: true)
+            
         }
+
         decisionHandler(.cancel)
+       
         
     }
     
