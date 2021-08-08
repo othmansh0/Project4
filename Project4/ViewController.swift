@@ -82,6 +82,38 @@ class ViewController: UIViewController, WKNavigationDelegate {
         }
     }
     
+// you are required to do something with decisionHandler closure. That might make sound an extremely complicated way of returning a value from a method
+    
+//  Having decisionHandler variable/function means you can show some user interface to the user "Do you really want to load this page?" and call the closure when you have an answer
+    
+//    you might call the decisionHandler closure straight away, or you might call it later on (perhaps after asking the user what they want to do) Swift considers it to be an escaping closure
+   
+//    @escaping acknowledging that the closure might be used later
+    
+    
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        //host: website domain like apple.com
+        
+        //set url equal to the URL of the navigation
+        let url = navigationAction.request.url //
+        
+        if let host = url?.host {//if there is a host for this URL, pull it out
+            for website in websites {
+                if host.contains(website){ // check if host contains each safe website
+                    decisionHandler(.allow)// allow loading
+                    return
+                }
+            }
+            
+        }
+        decisionHandler(.cancel)
+        
+    }
+    
+    
+    
+    
     
 }
 
